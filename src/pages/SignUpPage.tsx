@@ -3,13 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../api/sign";
 
 const SignUpPage = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailValid, setEamilVaild] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
   const [btnDisabled, setBtnDisabled] = useState(false);
-
-  const navigate = useNavigate();
 
   const handleEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -31,8 +30,11 @@ const SignUpPage = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    signup(email, password);
-    navigate("/signin");
+    signup(email, password)
+      .then(() => {
+        navigate("/signin");
+      })
+      .catch((error) => alert(error.message));
   };
 
   useEffect(() => {
