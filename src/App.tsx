@@ -1,9 +1,20 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
+import TodoPage from "./pages/TodoPage";
 
 function App() {
-  return <h1 className="text-3xl font-bold underline"> Hello world!</h1>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/todo" element={<TodoPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
