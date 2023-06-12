@@ -1,8 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getTodo } from "../api/todo";
 
 const TodoPage = () => {
   const [todos, setTodos] = useState([]);
-  const [addList, setAddList] = useState("");
+  const [inputTodo, setInputTodo] = useState("");
+
+  const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputTodo(event.target.value);
+  };
+
+  const handleAddTodo = (event?: React.MouseEvent<HTMLButtonElement>) => {};
+
+  useEffect(() => {
+    getTodo()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => alert(error.message));
+  }, []);
 
   return (
     <section className="bg-gray-50">
@@ -16,10 +31,12 @@ const TodoPage = () => {
               <input
                 data-testid="new-todo-input"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2 mr-2 w-9/12"
+                onChange={handleInput}
               />
               <button
                 data-testid="new-todo-add-button"
                 className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2 w-3/12"
+                onClick={handleAddTodo}
               >
                 추가
               </button>
