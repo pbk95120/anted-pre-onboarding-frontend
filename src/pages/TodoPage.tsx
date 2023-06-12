@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { getTodo } from "../api/todo";
-import { createTodo } from "../api/todo";
-import { deleteTodo } from "../api/todo";
+import { getTodo, updateTodo, createTodo, deleteTodo } from "../api/todo";
 
 const TodoPage = () => {
   const [todos, setTodos] = useState<any[]>([]);
@@ -11,8 +9,22 @@ const TodoPage = () => {
     setInputTodo(event.target.value);
   };
 
+  const handleCheckBox = async (
+    id: number,
+    iscompleted: boolean,
+    todo: string
+  ) => {
+    await updateTodo(id, iscompleted, todo);
+    getTodo()
+      .then((res) => {
+        if (res) {
+          setTodos(res.data);
+        }
+      })
+      .catch((error) => alert(error.message));
+  };
+
   const handleAddTodo = async (event?: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(inputTodo);
     await createTodo(inputTodo);
     getTodo()
       .then((res) => {
@@ -69,7 +81,14 @@ const TodoPage = () => {
             {todos.map((todo) => (
               <li key={todo.id}>
                 <label>
-                  <input type="checkbox" className="mr-2" />
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    checked={todo.isCompleted}
+                    onChange={() =>
+                      handleCheckBox(todo.id, !todo.isCompleted, todo.todo)
+                    }
+                  />
                   <span className="inline-block mr-5 w-6/12">{todo.todo}</span>
                 </label>
                 <button

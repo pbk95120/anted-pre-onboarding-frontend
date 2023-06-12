@@ -31,3 +31,20 @@ export const deleteTodo = async (id: number) => {
     console.log(error);
   }
 };
+
+export const updateTodo = async (
+  id: number,
+  isCompleted: boolean,
+  todo: string
+) => {
+  try {
+    const res = await baseURL.put(`/todos/${id}`, {
+      todo: todo,
+      isCompleted: isCompleted,
+    });
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
