@@ -3,13 +3,11 @@ import { baseURL } from "./baseURL";
 export const getTodo = async () => {
   try {
     const token = localStorage.getItem("access_token");
-    console.log(token);
     const res = await baseURL.get("/todos", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(res);
     return res;
   } catch (error) {
     console.log(error);
@@ -29,7 +27,6 @@ export const createTodo = async (todo: string) => {
         },
       }
     );
-    console.log(res);
     return res;
   } catch (error) {
     console.log(error);
@@ -44,7 +41,6 @@ export const deleteTodo = async (id: number) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(res);
     return res;
   } catch (error) {
     console.log(error);
@@ -70,7 +66,6 @@ export const updateTodo = async (
         },
       }
     );
-    console.log(res);
     return res;
   } catch (error) {
     console.log(error);

@@ -91,10 +91,10 @@ const TodoPage = () => {
               </button>
             </div>
             {todos.map((todo) => (
-              <li key={todo.id} className="flex">
+              <li key={todo.id} className="flex items-center">
                 {editTodo === todo.id ? (
                   <>
-                    <label className="flex">
+                    <label className="flex w-8/12">
                       <input
                         type="checkbox"
                         className="mr-2"
@@ -108,13 +108,14 @@ const TodoPage = () => {
                         }
                       />
                       <input
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2 mr-2"
+                        data-testid="modify-input"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2 mr-2 w-full"
                         onChange={(e) => setInputEdit(e.target.value)}
                       />
                     </label>
                     <button
-                      data-testid="modify-button"
-                      className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 mr-2"
+                      data-testid="submit-button"
+                      className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 w-2/12"
                       onClick={() => {
                         handleEditSubmit(todo.id, todo.isCompleted, inputEdit);
                         handleEditExit();
@@ -123,8 +124,8 @@ const TodoPage = () => {
                       제출
                     </button>
                     <button
-                      data-testid="delete-button"
-                      className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2"
+                      data-testid="cancel-button"
+                      className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 w-2/12"
                       onClick={() => handleEditExit()}
                     >
                       취소
@@ -132,7 +133,7 @@ const TodoPage = () => {
                   </>
                 ) : (
                   <>
-                    <label className="flex">
+                    <label className="flex w-8/12">
                       <input
                         type="checkbox"
                         className="mr-2"
@@ -145,20 +146,18 @@ const TodoPage = () => {
                           )
                         }
                       />
-                      <span className="inline-block mr-5 w-6/12">
-                        {todo.todo}
-                      </span>
+                      <span className="inline-block mr-5">{todo.todo}</span>
                     </label>
                     <button
                       data-testid="modify-button"
-                      className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 mr-2"
+                      className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 mr-2 w-2/12"
                       onClick={() => handleEdit(todo.id)}
                     >
                       수정
                     </button>
                     <button
                       data-testid="delete-button"
-                      className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2"
+                      className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 w-2/12"
                       onClick={() => handleDeleteTodo(todo.id)}
                     >
                       삭제
