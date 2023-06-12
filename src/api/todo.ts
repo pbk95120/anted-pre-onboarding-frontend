@@ -10,7 +10,7 @@ export const getTodo = async () => {
   }
 };
 
-export const CreateTodo = async (todo: string) => {
+export const createTodo = async (todo: string) => {
   try {
     const res = await baseURL.post("/todos", {
       todo: todo,

@@ -1,20 +1,33 @@
 import { useEffect, useState } from "react";
 import { getTodo } from "../api/todo";
+import { createTodo } from "../api/todo";
 
 const TodoPage = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<any[]>([]);
   const [inputTodo, setInputTodo] = useState("");
 
   const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputTodo(event.target.value);
   };
 
-  const handleAddTodo = (event?: React.MouseEvent<HTMLButtonElement>) => {};
+  const handleAddTodo = async (event?: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(inputTodo);
+    await createTodo(inputTodo);
+    getTodo()
+      .then((res) => {
+        if (res) {
+          setTodos(res.data);
+        }
+      })
+      .catch((error) => alert(error.message));
+  };
 
   useEffect(() => {
     getTodo()
       .then((res) => {
-        console.log(res);
+        if (res) {
+          setTodos(res.data);
+        }
       })
       .catch((error) => alert(error.message));
   }, []);
@@ -41,24 +54,26 @@ const TodoPage = () => {
                 추가
               </button>
             </div>
-            <li>
-              <label>
-                <input type="checkbox" className="mr-2" />
-                <span className="inline-block mr-5 w-6/12">TODO 1</span>
-              </label>
-              <button
-                data-testid="modify-button"
-                className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 mr-2"
-              >
-                수정
-              </button>
-              <button
-                data-testid="delete-button"
-                className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2"
-              >
-                삭제
-              </button>
-            </li>
+            {todos.map((todo) => (
+              <li key={todo.id}>
+                <label>
+                  <input type="checkbox" className="mr-2" />
+                  <span className="inline-block mr-5 w-6/12">{todo.todo}</span>
+                </label>
+                <button
+                  data-testid="modify-button"
+                  className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 mr-2"
+                >
+                  수정
+                </button>
+                <button
+                  data-testid="delete-button"
+                  className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2"
+                >
+                  삭제
+                </button>
+              </li>
+            ))}
           </div>
         </div>
       </div>
