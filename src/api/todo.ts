@@ -21,3 +21,13 @@ export const createTodo = async (todo: string) => {
     console.log(error);
   }
 };
+
+export const deleteTodo = async (id: number) => {
+  try {
+    const res = await baseURL.delete(`/todos/${id}`);
+    console.log(res);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};

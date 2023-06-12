@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTodo } from "../api/todo";
 import { createTodo } from "../api/todo";
+import { deleteTodo } from "../api/todo";
 
 const TodoPage = () => {
   const [todos, setTodos] = useState<any[]>([]);
@@ -13,6 +14,17 @@ const TodoPage = () => {
   const handleAddTodo = async (event?: React.MouseEvent<HTMLButtonElement>) => {
     console.log(inputTodo);
     await createTodo(inputTodo);
+    getTodo()
+      .then((res) => {
+        if (res) {
+          setTodos(res.data);
+        }
+      })
+      .catch((error) => alert(error.message));
+  };
+
+  const handleDeleteTodo = async (id: number) => {
+    await deleteTodo(id);
     getTodo()
       .then((res) => {
         if (res) {
@@ -49,7 +61,7 @@ const TodoPage = () => {
               <button
                 data-testid="new-todo-add-button"
                 className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2 w-3/12"
-                onClick={handleAddTodo}
+                onClick={() => handleAddTodo()}
               >
                 추가
               </button>
@@ -69,6 +81,7 @@ const TodoPage = () => {
                 <button
                   data-testid="delete-button"
                   className="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2"
+                  onClick={() => handleDeleteTodo(todo.id)}
                 >
                   삭제
                 </button>
